@@ -1,0 +1,11 @@
+# Python items
+backend/venv/
+backend/__pycache__/
+*.pyc
+
+# Node items
+frontend/node_modules/
+frontend/dist/
+
+# Local env files
+.env
