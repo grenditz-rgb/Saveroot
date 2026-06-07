@@ -1,6 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from downloader import get_video_info
+from fastapi.responses import FileResponse
+from downloader import get_video_info, download_video
+import os
 
 app = FastAPI()
 
@@ -20,3 +22,14 @@ def fetch_info(data: dict):
     url = data["url"]
     result = get_video_info(url)
     return result
+
+@app.post ("/download")
+def fetch_download(data: dict):
+    url = data["url"]
+    format_id = data["format_id"]
+    file_path = download_video(url, format_id)
+    return FileResponse(
+        path = file_path,
+        filename=os.path.basename(file_path),
+        media_type="application/octet-stream"
+    )
